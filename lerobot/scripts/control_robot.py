@@ -182,7 +182,6 @@ def teleoperate(
         display_cameras=display_cameras,
     )
 
-
 @safe_disconnect
 def record(
     robot: Robot,

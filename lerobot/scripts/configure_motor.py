@@ -113,7 +113,7 @@ def configure_motor(port, brand, model, motor_idx_des, baudrate_des):
             # Set Maximum_Acceleration to 254 to speedup acceleration and deceleration of
             # the motors. Note: this configuration is not in the official STS3215 Memory Table
             motor_bus.write("Lock", 0)
-            motor_bus.write("Maximum_Acceleration", 254)
+            motor_bus.write("Maximum_Acceleration", 100) #decreased from 254 to 100 to hopefully solve the issue of the motor shaking
 
             motor_bus.write("Goal_Position", 2048)
             time.sleep(4)

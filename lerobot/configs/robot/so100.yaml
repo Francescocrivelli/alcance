@@ -18,7 +18,7 @@ max_relative_target: null
 leader_arms:
   main:
     _target_: lerobot.common.robot_devices.motors.feetech.FeetechMotorsBus
-    port: /dev/tty.usbmodem585A0077581
+    port: /dev/tty.usbmodem58CD1771471
     motors:
       # name: (index, model)
       shoulder_pan: [1, "sts3215"]
@@ -31,7 +31,7 @@ leader_arms:
 follower_arms:
   main:
     _target_: lerobot.common.robot_devices.motors.feetech.FeetechMotorsBus
-    port: /dev/tty.usbmodem585A0080971
+    port: /dev/tty.usbmodem58CD1773131
     motors:
       # name: (index, model)
       shoulder_pan: [1, "sts3215"]
@@ -41,14 +41,28 @@ follower_arms:
       wrist_roll: [5, "sts3215"]
       gripper: [6, "sts3215"]
 
+# cameras:
+#   laptop:
+#     _target_: lerobot.common.robot_devices.cameras.opencv.OpenCVCamera
+#     camera_index: 0
+#     fps: 30
+#     width: 640
+#     height: 480
+#   phone:
+#     _target_: lerobot.common.robot_devices.cameras.opencv.OpenCVCamera
+#     camera_index: 1
+#     fps: 30
+#     width: 640
+#     height: 480
+
 cameras:
-  laptop:
+  endeffector:  # Innomaker 720P for end-effector view
     _target_: lerobot.common.robot_devices.cameras.opencv.OpenCVCamera
     camera_index: 0
     fps: 30
     width: 640
     height: 480
-  phone:
+  workspace:  # Logitech camera for workspace view
     _target_: lerobot.common.robot_devices.cameras.opencv.OpenCVCamera
     camera_index: 1
     fps: 30

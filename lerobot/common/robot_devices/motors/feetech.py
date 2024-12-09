@@ -468,6 +468,8 @@ class FeetechMotorsBus:
 
                 # Rescale the present position to a nominal range [0, 100] %,
                 # useful for joints with linear motions like Aloha gripper
+                # Normalize the motor position from [start_pos, end_pos] range to [0, 100] percentage range
+                # by subtracting start_pos to shift to 0, dividing by total range to get [0,1], then scaling to percentage
                 values[i] = (values[i] - start_pos) / (end_pos - start_pos) * 100
 
                 if (values[i] < LOWER_BOUND_LINEAR) or (values[i] > UPPER_BOUND_LINEAR):
