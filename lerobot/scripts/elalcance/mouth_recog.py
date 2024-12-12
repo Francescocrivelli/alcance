@@ -1,0 +1,81 @@
+import mediapipe as mp
+import cv2
+import math
+
+# Try different GStreamer pipelines if default doesn't work
+mp_face_mesh = mp.solutions.face_mesh
+
+# GStreamer pipeline configuration
+def gstreamer_pipeline(
+    capture_width=1280,
+    capture_height=720,
+    display_width=640,
+    display_height=360,
+    framerate=30,
+    flip_method=0
+):
+    return (
+        "nvarguscamerasrc ! "
+        "video/x-raw(memory:NVMM), "
+        f"width=(int){capture_width}, height=(int){capture_height}, "
+        f"format=(string)NV12, framerate=(fraction){framerate}/1 ! "
+        "nvvidconv flip-method=%d ! "
+        "video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! "
+        "videoconvert ! "
+        "video/x-raw, format=(string)BGR ! appsink"
+        % (flip_method, display_width, display_height)
+    )
+
+def mouth_open_activate(camera_index=0):
+    """Detects if the mouth is open and returns a boolean."""
+    cap = cv2.VideoCapture(gstreamer_pipeline(), cv2.CAP_GSTREAMER)
+
+    # If GStreamer fails, try USB camera
+    if not cap.isOpened():
+        print("Failed to open camera with GStreamer, trying USB camera...")
+        cap = cv2.VideoCapture(camera_index)
+        if not cap.isOpened():
+            print("Failed to open USB camera")
+            return None  # Could not open any camera
+
+    with mp_face_mesh.FaceMesh(
+        static_image_mode=False,
+        max_num_faces=1,
+        min_detection_confidence=0.7,
+        min_tracking_confidence=0.7
+    ) as face_mesh:
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                print("Failed to grab frame")
+                break
+
+            # Resize frame to improve processing speed
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            results = face_mesh.process(frame_rgb)
+
+            if results.multi_face_landmarks:
+                for face_landmarks in results.multi_face_landmarks:
+                    # Get the landmarks for the upper and lower lips
+                    upper_lip = face_landmarks.landmark[13]
+                    lower_lip = face_landmarks.landmark[14]
+
+                    # Calculate the Euclidean distance between the upper and lower lip landmarks
+                    distance = math.hypot(upper_lip.x - lower_lip.x, upper_lip.y - lower_lip.y)
+
+                    # Threshold for determining if the mouth is open
+                    if distance > 0.02:
+                        print("Mouth is open")
+                        cap.release()
+                        return True
+
+                    # Continue checking if the mouth is not open
+                    print("Mouth is closed")
+
+            # Exit on pressing 'q'
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                print("Exiting...")
+                break
+
+    cap.release()
+    return None  # No mouth detected or camera issue

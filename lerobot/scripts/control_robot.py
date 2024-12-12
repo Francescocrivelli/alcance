@@ -60,6 +60,28 @@ python lerobot/scripts/control_robot.py record \
     --episode-time-s 30 \
     --reset-time-s 10
 ```
+```bash
+python lerobot/scripts/control_robot.py record \
+    --robot-path lerobot/configs/robot/so100.yaml \
+    --fps 30 \
+    --repo-id francescocrivelli/demo_recording1 \
+    --tags so100tutorial \
+    --warmup-time-s 2 \
+    --episode-time-s 20 \
+    --reset-time-s 5 \
+    --num-episodes 1 \
+    --push-to-hub 1\
+    --single-task "demo recording"
+```
+
+FOR REPLAY:
+
+python lerobot/scripts/control_robot.py replay \
+  --robot-path lerobot/configs/robot/so100.yaml \
+  --repo-id francescocrivelli/demo_recording1 \
+  --fps 30 \
+  --episode 0
+
 
 **NOTE**: You can use your keyboard to control data recording flow.
 - Tap right arrow key '->' to early exit while recording an episode and go to resseting the environment.
