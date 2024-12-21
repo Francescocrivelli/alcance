@@ -8,6 +8,8 @@ El Alcance
 - [Features](#features)
 - [integration.py Key Functions](#integrationpy-key-functions)
 - [Link to Project Report](#link-to-project-report)
+- [Citation](#citation)
+
 
 ## Description
 Our project involves a collaboration with Tukuypaj, a non-profit organization supporting numerous underserved communities in Chile. We learnt that the organization is often short-staffed in having available personnel to feed their quadriplegic community during mealtimes. Therefore, our primary project objective was to build a robotic system that can help reach for food and feed quadriplegic beneficiaries. 
