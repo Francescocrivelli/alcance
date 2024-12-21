@@ -58,3 +58,15 @@ python lerobot/scripts/elalcance/integration.py
 
 ## Link to Project Report
 https://www.francescocrivelli.com/alcance/index.html
+
+## Citation
+If you use our work or find it helpful, please cite us using the following BibTeX entry:
+
+```bibtex
+@misc{crivelli2024lealcance,
+        author = {Francesco C., Bryan S., Claire B., and Boris},
+        title = {Le-Alcance: A Fork of LeRobot for Low-Cost Robotic Learning},
+        howpublished = "\url{https://github.com/francescocrivelli/le-alcance}",
+        year = {2024}
+}
+```
